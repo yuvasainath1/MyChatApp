@@ -1,4 +1,4 @@
-import { useFileHandler, useInputValidation } from "6pp";
+import { useFileHandler} from "6pp";
 import { CameraAlt as CameraAltIcon } from "@mui/icons-material";
 import {
   Avatar,
@@ -18,18 +18,18 @@ import { VisuallyHiddenInput } from "../components/styles/StyledComponents";
 import { bgGradient } from "../constants/color";
 import { server } from "../constants/config";
 import { userExists } from "../redux/reducers/auth";
-import { usernameValidator } from "../utils/validators";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
+ 
   const toggleLogin = () => setIsLogin((prev) => !prev);
 
-  const name = useInputValidation("");
-  const bio = useInputValidation("");
-  const username = useInputValidation("", usernameValidator);
-  const password = useInputValidation("");
+  
+  const [name,setName]=useState("");
+  const [bio,setBio]=useState("");
+  const [username,setUsername]=useState("");
+  const [password,setPassword]=useState("");
 
   const avatar = useFileHandler("single");
 
@@ -37,9 +37,9 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    console.log(name,bio,username,password);
     const toastId = toast.loading("Logging In...");
-
+    
     setIsLoading(true);
     const config = {
       withCredentials: true,
@@ -52,8 +52,8 @@ const Login = () => {
       const { data } = await axios.post(
         `${server}/api/v1/user/login`,
         {
-          username: username.value,
-          password: password.value,
+          username: username,
+          password: password,
         },
         config
       );
@@ -72,16 +72,15 @@ const Login = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
     const toastId = toast.loading("Signing Up...");
     setIsLoading(true);
 
     const formData = new FormData();
     formData.append("avatar", avatar.file);
-    formData.append("name", name.value);
-    formData.append("bio", bio.value);
-    formData.append("username", username.value);
-    formData.append("password", password.value);
+    formData.append("name", name);
+    formData.append("bio", bio);
+    formData.append("username", username);
+    formData.append("password", password);
 
     const config = {
       withCredentials: true,
@@ -151,8 +150,8 @@ const Login = () => {
                   label="Username"
                   margin="normal"
                   variant="outlined"
-                  value={username.value}
-                  onChange={username.changeHandler}
+                  value={username}
+                  onChange={(e)=>{setUsername(e.target.value)}}
                 />
 
                 <TextField
@@ -162,8 +161,8 @@ const Login = () => {
                   type="password"
                   margin="normal"
                   variant="outlined"
-                  value={password.value}
-                  onChange={password.changeHandler}
+                  value={password}
+                  onChange={(e)=>{setPassword(e.target.value)}}
                 />
 
                 <Button
@@ -254,8 +253,8 @@ const Login = () => {
                   label="Name"
                   margin="normal"
                   variant="outlined"
-                  value={name.value}
-                  onChange={name.changeHandler}
+                  value={name}
+                  onChange={(e)=>(setName(e.target.value))}
                 />
 
                 <TextField
@@ -264,8 +263,8 @@ const Login = () => {
                   label="Bio"
                   margin="normal"
                   variant="outlined"
-                  value={bio.value}
-                  onChange={bio.changeHandler}
+                  value={bio}
+                  onChange={(e)=>(setBio(e.target.value))}
                 />
                 <TextField
                   required
@@ -273,8 +272,8 @@ const Login = () => {
                   label="Username"
                   margin="normal"
                   variant="outlined"
-                  value={username.value}
-                  onChange={username.changeHandler}
+                  value={username}
+                  onChange={(e)=>(setUsername(e.target.value))}
                 />
 
                 {username.error && (
@@ -290,8 +289,8 @@ const Login = () => {
                   type="password"
                   margin="normal"
                   variant="outlined"
-                  value={password.value}
-                  onChange={password.changeHandler}
+                  value={password}
+                  onChange={(e)=>(setPassword(e.target.value))}
                 />
 
                 <Button

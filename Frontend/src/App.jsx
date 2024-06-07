@@ -35,6 +35,7 @@ const App = () => {
       .catch((err) => dispatch(userNotExists()));
   }, [dispatch]);
 
+  
   return loader ? (
     <LayoutLoader />
   ) : (
@@ -44,7 +45,7 @@ const App = () => {
           <Route
             element={
               <SocketProvider>
-                <ProtectRoute user={user} />
+                <ProtectRoute user={true} />
               </SocketProvider>
             }
           >
