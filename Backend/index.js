@@ -27,7 +27,7 @@ import chatRoute from "./routes/chat.js";
 import adminRoute from "./routes/admin.js";
 
 dotenv.config({
-  path: "./.env",
+  path: "./.sampleEnv", 
 });
 
 const mongoURI = process.env.MONGO_URI;

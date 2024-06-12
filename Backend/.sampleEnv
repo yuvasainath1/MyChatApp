@@ -1,6 +1,6 @@
 
 
-MONGO_URI = mongodb://localhost:27017
+MONGO_URI=mongodb+srv://sivakrishna:qb4GwFPjiNNJTZ04@cluster0.7fc7lzg.mongodb.net 
 
 JWT_SECRET=djgjkdshbgjkhfnjksdfhbnsjkdfsdhjfk
 
