@@ -60,17 +60,36 @@ const lineChartOptions = {
 
 const LineChart = ({ value = [] }) => {
   const data = {
-    labels,
+    labels:["ram","ramana","rajesh","rajani","rampu"],
     datasets: [
       {
-        data: value,
+        data: [1,23,3,3,4,5],
         label: "Messages",
+        fill: true,
+        backgroundColor: purpleLight,
+        borderColor: purple,
+      },
+      {
+        data: [2,3,2,20,10,4],
+        label: "M3",
         fill: true,
         backgroundColor: purpleLight,
         borderColor: purple,
       },
     ],
   };
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       data: value,
+  //       label: "Messages",
+  //       fill: true,
+  //       backgroundColor: purpleLight,
+  //       borderColor: purple,
+  //     },
+  //   ],
+  // };
 
   return <Line data={data} options={lineChartOptions} />;
 };

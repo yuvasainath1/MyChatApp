@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import AppLayout from "../components/layout/AppLayout";
 import { IconButton, Skeleton, Stack } from "@mui/material";
-import { grayColor, orange } from "../constants/color";
+import { grayColor } from "../constants/color";
 import {
   AttachFile as AttachFileIcon,
   Send as SendIcon,
@@ -32,8 +32,17 @@ import { setIsFileMenu } from "../redux/reducers/misc";
 import { removeNewMessagesAlert } from "../redux/reducers/chat";
 import { TypingLoader } from "../components/layout/Loaders";
 import { useNavigate } from "react-router-dom";
+import { lightBlue } from "@mui/material/colors";
+import { sampleMessage } from "../constants/sampleData";
 
 const Chat = ({ chatId, user }) => {
+  
+  // user={
+  //   name:"siva",
+  //   _id:"avdssvs",
+  //   username: "sivakrishna1092",
+  // }
+  // console.log(user)
   const socket = getSocket();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,27 +109,27 @@ const Chat = ({ chatId, user }) => {
     setMessage("");
   };
 
-  useEffect(() => {
-    socket.emit(CHAT_JOINED, { userId: user._id, members });
-    dispatch(removeNewMessagesAlert(chatId));
+  // useEffect(() => {
+  //   socket.emit(CHAT_JOINED, { userId: user._id, members });
+  //   dispatch(removeNewMessagesAlert(chatId));
 
-    return () => {
-      setMessages([]);
-      setMessage("");
-      setOldMessages([]);
-      setPage(1);
-      socket.emit(CHAT_LEAVED, { userId: user._id, members });
-    };
-  }, [chatId]);
+  //   return () => {
+  //     setMessages([]);
+  //     setMessage("");
+  //     setOldMessages([]);
+  //     setPage(1);
+  //     socket.emit(CHAT_LEAVED, { userId: user._id, members });
+  //   };
+  // }, [chatId]);
 
   useEffect(() => {
     if (bottomRef.current)
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  useEffect(() => {
-    if (chatDetails.isError) return navigate("/");
-  }, [chatDetails.isError]);
+  // useEffect(() => {
+  //   if (chatDetails.isError) return navigate("/");
+  // }, [chatDetails.isError]);
 
   const newMessagesListener = useCallback(
     (data) => {
@@ -198,6 +207,9 @@ const Chat = ({ chatId, user }) => {
         {allMessages.map((i) => (
           <MessageComponent key={i._id} message={i} user={user} />
         ))}
+         {/* {sampleMessage.map((i) => (
+          <MessageComponent key={i._id} message={i} user={{_id:"2"}} />
+        ))} */}
 
         {userTyping && <TypingLoader />}
 
@@ -238,12 +250,12 @@ const Chat = ({ chatId, user }) => {
             type="submit"
             sx={{
               rotate: "-30deg",
-              bgcolor: orange,
+              bgcolor: "lightblue",
               color: "white",
               marginLeft: "1rem",
               padding: "0.5rem",
               "&:hover": {
-                bgcolor: "error.dark",
+                bgcolor: "#4a90e2",
               },
             }}
           >

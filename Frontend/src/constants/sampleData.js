@@ -24,7 +24,7 @@ export const sampleUsers = [
   },
   {
     avatar: "https://www.w3schools.com/howto/img_avatar.png",
-    name: "John Boi",
+    name: "John Bhai",
     _id: "2",
   },
 ];
@@ -40,7 +40,7 @@ export const sampleNotifications = [
   {
     sender: {
       avatar: "https://www.w3schools.com/howto/img_avatar.png",
-      name: "John Boi",
+      name: "John Bhai",
     },
     _id: "2",
   },
@@ -49,11 +49,11 @@ export const sampleNotifications = [
 export const sampleMessage = [
   {
     attachments: [],
-    content: "L*uda ka Message hai",
+    content: "Hello Hi how are you",
     _id: "sfnsdjkfsdnfkjsbnd",
     sender: {
-      _id: "user._id",
-      name: "Chaman ",
+      _id: "2",
+      name: "siva",
     },
     chat: "chatId",
     createdAt: "2024-02-12T10:41:30.630Z",
@@ -62,7 +62,7 @@ export const sampleMessage = [
   {
     attachments: [
       {
-        public_id: "asdsad 2",
+        public_id: "aaa",
         url: "https://www.w3schools.com/howto/img_avatar.png",
       },
     ],
@@ -70,7 +70,7 @@ export const sampleMessage = [
     _id: "sfnsdjkfsdnfkdddjsbnd",
     sender: {
       _id: "sdfsdfsdf",
-      name: "Chaman  2",
+      name: "surya",
     },
     chat: "chatId",
     createdAt: "2024-02-12T10:41:30.630Z",
@@ -88,10 +88,10 @@ export const dashboardData = {
       groups: 5,
     },
     {
-      name: "John Boi",
+      name: "John bhai",
       avatar: "https://www.w3schools.com/howto/img_avatar.png",
       _id: "2",
-      username: "john_boi",
+      username: "john_bhai",
       friends: 20,
       groups: 25,
     },
@@ -99,7 +99,7 @@ export const dashboardData = {
 
   chats: [
     {
-      name: "LabadBass Group",
+      name: "Leo Group",
       avatar: ["https://www.w3schools.com/howto/img_avatar.png"],
       _id: "1",
       groupChat: false,
@@ -115,7 +115,7 @@ export const dashboardData = {
       },
     },
     {
-      name: "L*Da Luston Group",
+      name: "Dark Knight Group",
       avatar: ["https://www.w3schools.com/howto/img_avatar.png"],
       _id: "2",
       groupChat: true,
@@ -135,11 +135,11 @@ export const dashboardData = {
   messages: [
     {
       attachments: [],
-      content: "L*uda ka Message hai",
+      content: "hey there",
       _id: "sfnsdjkfsdnfkjsbnd",
       sender: {
         avatar: "https://www.w3schools.com/howto/img_avatar.png",
-        name: "Chaman ",
+        name: "Chimtu",
       },
       chat: "chatId",
       groupChat: false,
@@ -157,7 +157,7 @@ export const dashboardData = {
       _id: "sfnsdjkfsdnfkdddjsbnd",
       sender: {
         avatar: "https://www.w3schools.com/howto/img_avatar.png",
-        name: "Chaman  2",
+        name: "Chimtu 2",
       },
       chat: "chatId",
       groupChat: true,

@@ -16,7 +16,8 @@ const ChatItem = ({
   handleDeleteChat,
 }) => {
   return (
-    <Link
+    <div>
+      <Link
       sx={{
         padding: "0",
       }}
@@ -30,8 +31,10 @@ const ChatItem = ({
         style={{
           display: "flex",
           gap: "1rem",
+          borderRadius:"0.5rem",
+          margin:"0.3rem",
           alignItems: "center",
-          backgroundColor: sameSender ? "black" : "unset",
+          backgroundColor: sameSender ? "lightblue" : "unset",
           color: sameSender ? "white" : "unset",
           position: "relative",
           padding: "1rem",
@@ -62,6 +65,7 @@ const ChatItem = ({
         )}
       </motion.div>
     </Link>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { adminLogin, adminLogout, getAdmin } from "../thunks/admin";
 import toast from "react-hot-toast";
 
 const initialState = {
-  user: null,
+  user:null,
   isAdmin: false,
   loader: true,
 };

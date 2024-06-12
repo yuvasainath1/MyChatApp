@@ -65,8 +65,8 @@ const Sidebar = ({ w = "100%" }) => {
 
   return (
     <Stack width={w} direction={"column"} p={"3rem"} spacing={"3rem"}>
-      <Typography variant="h5" textTransform={"uppercase"}>
-        Chattu
+      <Typography variant="h5">
+        SwiftChat
       </Typography>
 
       <Stack spacing={"1rem"}>
@@ -111,7 +111,7 @@ const AdminLayout = ({ children }) => {
 
   const handleClose = () => setIsMobile(false);
 
-  if (!isAdmin) return <Navigate to="/admin" />;
+  // if (!isAdmin) return <Navigate to="/admin" />;
 
   return (
     <Grid container minHeight={"100vh"}>

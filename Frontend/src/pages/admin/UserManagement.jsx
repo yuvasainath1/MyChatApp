@@ -6,6 +6,7 @@ import Table from "../../components/shared/Table";
 import { server } from "../../constants/config";
 import { useErrors } from "../../hooks/hook";
 import { transformImage } from "../../lib/features";
+import { dashboardData } from "../../constants/sampleData";
 
 const columns = [
   {
@@ -61,7 +62,7 @@ const UserManagement = () => {
       error: error,
     },
   ]);
-
+ 
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -74,6 +75,14 @@ const UserManagement = () => {
         }))
       );
     }
+
+      // setRows(
+      //   dashboardData.users.map((i) => ({
+      //     ...i,
+      //     id: i._id,
+      //     avatar: transformImage(i.avatar, 50),
+      //   }))
+      // );
   }, [data]);
 
   return (
