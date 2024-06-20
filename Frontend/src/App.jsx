@@ -45,7 +45,7 @@ const App = () => {
           <Route
             element={
               <SocketProvider>
-                <ProtectRoute user={true} />
+                <ProtectRoute user={user} />
               </SocketProvider>
             }
           >

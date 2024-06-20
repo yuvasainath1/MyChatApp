@@ -5,7 +5,7 @@ import { Message } from "../models/message.js";
 import { User } from "../models/user.js";
 import { ErrorHandler } from "../utils/utility.js";
 import { cookieOptions } from "../utils/features.js";
-import { adminSecretKey } from "../index.js";
+import { adminSecretKey } from "../index.js"; 
 
 const adminLogin = TryCatch(async (req, res, next) => {
   const { secretKey } = req.body;
@@ -18,7 +18,7 @@ const adminLogin = TryCatch(async (req, res, next) => {
 
   return res
     .status(200)
-    .cookie("chattu-admin-token", token, {
+    .cookie("chat-admin-token", token, {
       ...cookieOptions,
       maxAge: 1000 * 60 * 15,
     })
@@ -31,7 +31,7 @@ const adminLogin = TryCatch(async (req, res, next) => {
 const adminLogout = TryCatch(async (req, res, next) => {
   return res
     .status(200)
-    .cookie("chattu-admin-token", "", {
+    .cookie("chat-admin-token", "", {
       ...cookieOptions,
       maxAge: 0,
     })

@@ -38,23 +38,12 @@ app.get("/my/groups", getMyGroups);
 
 app.put("/addmembers", addMemberValidator(), validateHandler, addMembers);
 
-app.put(
-  "/removemember",
-  removeMemberValidator(),
-  validateHandler,
-  removeMember
-);
+app.put("/removemember",removeMemberValidator(),validateHandler,removeMember);
 
 app.delete("/leave/:id", chatIdValidator(), validateHandler, leaveGroup);
 
 // Send Attachments
-app.post(
-  "/message",
-  attachmentsMulter,
-  sendAttachmentsValidator(),
-  validateHandler,
-  sendAttachments
-);
+app.post( "/message", attachmentsMulter, sendAttachmentsValidator(), validateHandler, sendAttachments );
 
 // Get Messages
 app.get("/message/:id", chatIdValidator(), validateHandler, getMessages);

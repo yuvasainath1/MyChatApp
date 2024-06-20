@@ -35,9 +35,8 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e) => {  
     e.preventDefault();
-    console.log(name,bio,username,password);
     const toastId = toast.loading("Logging In...");
     
     setIsLoading(true);
@@ -91,7 +90,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        `${server}/api/v1/user/new`,
+        `${server}/api/v1/user/register`,
         formData,
         config
       );

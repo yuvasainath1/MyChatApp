@@ -12,13 +12,12 @@ import {
   uploadFilesToCloudinary,
 } from "../utils/features.js";
 import { ErrorHandler } from "../utils/utility.js";
+import { CHAT_TOKEN } from "../constants/config.js";
 
 // Create a new user and save it to the database and save token in cookie
-const newUser = TryCatch(async (req, res, next) => {
-  const { name, username, password, bio } = req.body;
-
+const newUser = TryCatch(async (req, res, next) => { 
+  const { name, username, password, bio, } = req.body;
   const file = req.file;
-
   if (!file) return next(new ErrorHandler("Please Upload Avatar"));
 
   const result = await uploadFilesToCloudinary([file]);
@@ -27,7 +26,6 @@ const newUser = TryCatch(async (req, res, next) => {
     public_id: result[0].public_id,
     url: result[0].url,
   };
-
   const user = await User.create({
     name,
     bio,
@@ -69,7 +67,7 @@ const getMyProfile = TryCatch(async (req, res, next) => {
 const logout = TryCatch(async (req, res) => {
   return res
     .status(200)
-    .cookie("chattu-token", "", { ...cookieOptions, maxAge: 0 })
+    .cookie(CHAT_TOKEN, "", { ...cookieOptions, maxAge: 0 })
     .json({
       success: true,
       message: "Logged out successfully",
@@ -81,23 +79,21 @@ const searchUser = TryCatch(async (req, res) => {
 
   // Finding All my chats
   const myChats = await Chat.find({ groupChat: false, members: req.user });
-
   //  extracting All Users from my chats means friends or people I have chatted with
   const allUsersFromMyChats = myChats.flatMap((chat) => chat.members);
-
   // Finding all users except me and my friends
   const allUsersExceptMeAndFriends = await User.find({
-    _id: { $nin: allUsersFromMyChats },
-    name: { $regex: name, $options: "i" },
-  });
-
+    // _id: { $nin: allUsersFromMyChats },
+    name: { $regex: name, $options: "i" }});
+  console.log(allUsersExceptMeAndFriends);
   // Modifying the response
+  // console.log(allUsersExceptMeAndFriends);
   const users = allUsersExceptMeAndFriends.map(({ _id, name, avatar }) => ({
     _id,
     name,
     avatar: avatar.url,
   }));
-
+ 
   return res.status(200).json({
     success: true,
     users,

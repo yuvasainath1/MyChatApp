@@ -8,6 +8,13 @@ import { createServer } from "http";
 import { v4 as uuid } from "uuid";
 import cors from "cors";
 import { v2 as cloudinary } from "cloudinary";
+import  {
+  createGroupChats,
+  createMessages,
+  createMessagesInAChat,
+  createSingleChats,
+} from "./seeders/chat.js"
+
 import {
   CHAT_JOINED,
   CHAT_LEAVED,
@@ -26,6 +33,9 @@ import userRoute from "./routes/user.js";
 import chatRoute from "./routes/chat.js";
 import adminRoute from "./routes/admin.js";
 
+
+
+
 dotenv.config({
   path: "./.sampleEnv", 
 });
@@ -38,6 +48,10 @@ const userSocketIDs = new Map();
 const onlineUsers = new Set();
 
 connectDB(mongoURI);
+// createGroupChats(10);
+// createMessages(10);
+// createMessagesInAChat(10);
+// createSingleChats(10);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

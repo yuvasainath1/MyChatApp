@@ -18,16 +18,16 @@ import { Message } from "../models/message.js";
 
 const newGroupChat = TryCatch(async (req, res, next) => {
   const { name, members } = req.body;
-
+  
   const allMembers = [...members, req.user];
-
+  
   await Chat.create({
     name,
     groupChat: true,
     creator: req.user,
     members: allMembers,
   });
-
+ 
   emitEvent(req, ALERT, allMembers, `Welcome to ${name} group`);
   emitEvent(req, REFETCH_CHATS, members);
 
@@ -41,7 +41,7 @@ const getMyChats = TryCatch(async (req, res, next) => {
   const chats = await Chat.find({ members: req.user }).populate(
     "members",
     "name avatar"
-  );
+  ); 
 
   const transformedChats = chats.map(({ _id, name, members, groupChat }) => {
     const otherMember = getOtherMember(members, req.user);
@@ -219,11 +219,11 @@ const sendAttachments = TryCatch(async (req, res, next) => {
 
   const files = req.files || [];
 
-  if (files.length < 1)
-    return next(new ErrorHandler("Please Upload Attachments", 400));
+  // if (files.length < 1)
+  //   return next(new ErrorHandler("Please Upload Attachments", 400));
 
-  if (files.length > 5)
-    return next(new ErrorHandler("Files Can't be more than 5", 400));
+  // if (files.length > 5)
+  //   return next(new ErrorHandler("Files Can't be more than 5", 400));
 
   const [chat, me] = await Promise.all([
     Chat.findById(chatId),
@@ -232,11 +232,10 @@ const sendAttachments = TryCatch(async (req, res, next) => {
 
   if (!chat) return next(new ErrorHandler("Chat not found", 404));
 
-  if (files.length < 1)
-    return next(new ErrorHandler("Please provide attachments", 400));
 
   //   Upload files here
-  const attachments = await uploadFilesToCloudinary(files);
+  // const attachments = await uploadFilesToCloudinary(files);
+  const attachments = [];
 
   const messageForDB = {
     content: "",
@@ -265,6 +264,41 @@ const sendAttachments = TryCatch(async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message,
+  });
+});
+
+const getMessages = TryCatch(async (req, res, next) => {
+  const chatId = req.params.id;
+  const { page = 1 } = req.query;
+
+  const resultPerPage = 20;
+  const skip = (page - 1) * resultPerPage;
+
+  const chat = await Chat.findById(chatId);
+
+  if (!chat) return next(new ErrorHandler("Chat not found", 404));
+
+  if (!chat.members.includes(req.user.toString()))
+    return next(
+      new ErrorHandler("You are not allowed to access this chat", 403)
+    );
+
+  const [messages, totalMessagesCount] = await Promise.all([
+    Message.find({ chat: chatId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(resultPerPage)
+      .populate("sender", "name")
+      .lean(),
+    Message.countDocuments({ chat: chatId }),
+  ]);
+
+  const totalPages = Math.ceil(totalMessagesCount / resultPerPage) || 0;
+
+  return res.status(200).json({
+    success: true,
+    messages: messages.reverse(),
+    totalPages,
   });
 });
 
@@ -372,40 +406,6 @@ const deleteChat = TryCatch(async (req, res, next) => {
   });
 });
 
-const getMessages = TryCatch(async (req, res, next) => {
-  const chatId = req.params.id;
-  const { page = 1 } = req.query;
-
-  const resultPerPage = 20;
-  const skip = (page - 1) * resultPerPage;
-
-  const chat = await Chat.findById(chatId);
-
-  if (!chat) return next(new ErrorHandler("Chat not found", 404));
-
-  if (!chat.members.includes(req.user.toString()))
-    return next(
-      new ErrorHandler("You are not allowed to access this chat", 403)
-    );
-
-  const [messages, totalMessagesCount] = await Promise.all([
-    Message.find({ chat: chatId })
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(resultPerPage)
-      .populate("sender", "name")
-      .lean(),
-    Message.countDocuments({ chat: chatId }),
-  ]);
-
-  const totalPages = Math.ceil(totalMessagesCount / resultPerPage) || 0;
-
-  return res.status(200).json({
-    success: true,
-    messages: messages.reverse(),
-    totalPages,
-  });
-});
 
 export {
   newGroupChat,
@@ -415,8 +415,8 @@ export {
   removeMember,
   leaveGroup,
   sendAttachments,
+  getMessages,
   getChatDetails,
   renameGroup,
   deleteChat,
-  getMessages,
 };
