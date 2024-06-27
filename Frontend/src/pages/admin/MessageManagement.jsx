@@ -116,18 +116,6 @@ const MessageManagement = () => {
         }))
       );
     }
-   
-      // setRows(
-      //   dashboardData.messages.map((i) => ({
-      //     ...i,
-      //     id: i._id,
-      //     sender: {
-      //       name: i.sender.name,
-      //       avatar: transformImage(i.sender.avatar, 50),
-      //     },
-      //     createdAt: moment(i.createdAt).format("MMMM Do YYYY, h:mm:ss a"),
-      //   }))
-      // );
   }, [data]);
 
   return (

@@ -75,14 +75,6 @@ const UserManagement = () => {
         }))
       );
     }
-
-      // setRows(
-      //   dashboardData.users.map((i) => ({
-      //     ...i,
-      //     id: i._id,
-      //     avatar: transformImage(i.avatar, 50),
-      //   }))
-      // );
   }, [data]);
 
   return (

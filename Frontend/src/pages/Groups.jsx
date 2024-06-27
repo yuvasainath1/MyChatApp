@@ -321,21 +321,6 @@ const Groups = () => {
               overflow={"auto"}
             >
               {/* Members */}
-              {/* {
-                samepleChats.map((i) => (
-                  <UserItem
-                    user={i}
-                    key={i._id}
-                    isAdded
-                    styling={{
-                      boxShadow: "0 0 0.5rem  rgba(0,0,0,0.2)",
-                      padding: "1rem 2rem",
-                      borderRadius: "1rem",
-                    }}
-                    handler={removeMemberHandler}
-                  />
-                ))
-              } */}
               {isLoadingRemoveMember ? (
                 <CircularProgress />
               ) : (
@@ -405,12 +390,6 @@ const GroupsList = ({ w = "100%", myGroups = [], chatId }) => (
       overflow: "auto",
     }}
   >
-    {/* {
-        samepleChats.map((group) => (
-          <GroupListItem group={group} chatId={chatId} key={group._id} />
-        ))
-    }
-       */}
     {myGroups.length > 0 ? (
       myGroups.map((group) => (
         <GroupListItem group={group} chatId={chatId} key={group._id} />
