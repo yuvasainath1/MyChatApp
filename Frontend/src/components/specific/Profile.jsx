@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Avatar, Dialog, Stack, Typography } from "@mui/material";
 import {
   Face as FaceIcon,
   AlternateEmail as UserNameIcon,
@@ -7,15 +7,44 @@ import {
 } from "@mui/icons-material";
 import moment from "moment";
 import { transformImage } from "../../lib/features";
+import { useDispatch, useSelector } from "react-redux";
+import {setIsProfile} from '../../redux/reducers/misc'
 
 const Profile = ({ user }) => {
-  return (
-    <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
+  const dispatch=useDispatch();
+  const { isProfile } = useSelector((state) => state.misc);
+  const handleClose=()=>{
+      dispatch(setIsProfile(false));
+  }
+  return ( 
+    <Dialog onClose={handleClose}   open={isProfile} >
+      <Stack 
+      style={{background:"rgba(0,0,0,0.5)"}}  
+      spacing={"2rem"} 
+      padding={"2rem"} 
+      direction={"column"} 
+      alignItems={"center"}
+      sx={{
+        width: {
+          xs: '15rem',  
+          sm: '30rem',  
+          md: '30rem',  
+        }
+      }}
+      >
       <Avatar
         src={transformImage(user?.avatar?.url)}
         sx={{
-          width: 200,
-          height: 200,
+          width: {
+            xs:100,
+            md:150,
+            sm:150,
+          },
+          height:  {
+            xs:100,
+            md:150,
+            sm:150,
+          },
           objectFit: "contain",
           marginBottom: "1rem",
           border: "5px solid white",
@@ -34,6 +63,9 @@ const Profile = ({ user }) => {
         Icon={<CalendarIcon />}
       />
     </Stack>
+     
+   
+    </Dialog>
   );
 };
 
@@ -49,7 +81,7 @@ const ProfileCard = ({ text, Icon, heading }) => (
 
     <Stack>
       <Typography variant="body1">{text}</Typography>
-      <Typography color={"gray"} variant="caption">
+      <Typography color={"black"} variant="caption">
         {heading}
       </Typography>
     </Stack>

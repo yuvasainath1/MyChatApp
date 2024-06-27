@@ -18,6 +18,7 @@ import {
 import {
   setIsDeleteMenu,
   setIsMobile,
+  setIsMobileProfile,
   setSelectedDeleteChat,
 } from "../../redux/reducers/misc";
 import { getSocket } from "../../socket";
@@ -27,6 +28,8 @@ import ChatList from "../specific/ChatList";
 import Profile from "../specific/Profile";
 import Header from "./Header";
 import { samepleChats } from "../../constants/sampleData";
+import MobileProfile from "../specific/MobileProfile"
+import { bgGradient } from "../../constants/color";
 
 const AppLayout = () => (WrappedComponent) => {
   return (props) => {
@@ -40,7 +43,7 @@ const AppLayout = () => (WrappedComponent) => {
 
     const [onlineUsers, setOnlineUsers] = useState([]);
 
-    const { isMobile } = useSelector((state) => state.misc);
+    const { isMobile, isMobileProfile} = useSelector((state) => state.misc);
     const { user } = useSelector((state) => state.auth);
     const { newMessagesAlert } = useSelector((state) => state.chat);
 
@@ -59,6 +62,8 @@ const AppLayout = () => (WrappedComponent) => {
     };
 
     const handleMobileClose = () => dispatch(setIsMobile(false));
+
+    const handleMobileProfileClose=()=> dispatch(setIsMobileProfile(false));
 
     const newMessageAlertListener = useCallback(
       (data) => {
@@ -106,8 +111,8 @@ const AppLayout = () => (WrappedComponent) => {
           <Drawer open={isMobile} onClose={handleMobileClose}>
             <ChatList
               w="70vw"
-              // chats={data?.chats}
-              chats={samepleChats}
+              chats={data?.chats}
+              // chats={samepleChats}
               chatId={chatId}
               handleDeleteChat={handleDeleteChat}
               newMessagesAlert={newMessagesAlert}
@@ -116,11 +121,29 @@ const AppLayout = () => (WrappedComponent) => {
           </Drawer>
         )}
 
-        <Grid container height={"calc(100vh - 4rem)"}>
+       {isLoading ? (
+          <Skeleton />
+        ) : (
+          <Drawer 
+          open={isMobileProfile} 
+          onClose={handleMobileProfileClose}
+          sx={{ 
+            '& .MuiDrawer-paper': { 
+                padding: 4 ,
+                backgroundColor:"#87CEFA", 
+                color: '#ffffff'
+            },
+          }}
+          >
+            <MobileProfile style={{backgroundColor:"blue" }}   />
+          </Drawer>
+        )}
+
+         <Grid container height={"calc(100vh - 4rem)"}>
           <Grid
             item
             sm={4}
-            md={3}
+            md={4}
             sx={{
               display: { xs: "none", sm: "block" },
             }}
@@ -130,8 +153,8 @@ const AppLayout = () => (WrappedComponent) => {
               <Skeleton />
             ) : (
               <ChatList
-                // chats={data?.chats}
-                chats={samepleChats}
+                chats={data?.chats}
+                // chats={samepleChats}
                 chatId={chatId}
                 handleDeleteChat={handleDeleteChat}
                 newMessagesAlert={newMessagesAlert}
@@ -139,24 +162,10 @@ const AppLayout = () => (WrappedComponent) => {
               />
             )}
           </Grid>
-          <Grid item xs={12} sm={8} md={5} lg={6} height={"100%"}>
+          <Grid item xs={12} sm={8} md={8} lg={8} height={"100%"}>
             <WrappedComponent {...props} chatId={chatId} user={user} />
           </Grid>
-
-          <Grid
-            item
-            md={4}
-            lg={3}
-            height={"100%"}
-            sx={{
-              display: { xs: "none", md: "block" },
-              padding: "2rem",
-              bgcolor: "rgba(0,0,0,0.85)",
-            }}
-          >
-            <Profile user={user} />
           </Grid>
-        </Grid>
       </>
     );
   };

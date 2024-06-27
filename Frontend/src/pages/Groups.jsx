@@ -321,7 +321,7 @@ const Groups = () => {
               overflow={"auto"}
             >
               {/* Members */}
-              {
+              {/* {
                 samepleChats.map((i) => (
                   <UserItem
                     user={i}
@@ -335,8 +335,8 @@ const Groups = () => {
                     handler={removeMemberHandler}
                   />
                 ))
-              }
-              {/* {isLoadingRemoveMember ? (
+              } */}
+              {isLoadingRemoveMember ? (
                 <CircularProgress />
               ) : (
                 members.map((i) => (
@@ -352,7 +352,7 @@ const Groups = () => {
                     handler={removeMemberHandler}
                   />
                 ))
-              )} */}
+              )}
             </Stack>
 
             {ButtonGroup}
@@ -405,13 +405,13 @@ const GroupsList = ({ w = "100%", myGroups = [], chatId }) => (
       overflow: "auto",
     }}
   >
-    {
+    {/* {
         samepleChats.map((group) => (
           <GroupListItem group={group} chatId={chatId} key={group._id} />
         ))
     }
-      
-    {/* {myGroups.length > 0 ? (
+       */}
+    {myGroups.length > 0 ? (
       myGroups.map((group) => (
         <GroupListItem group={group} chatId={chatId} key={group._id} />
       ))
@@ -419,7 +419,7 @@ const GroupsList = ({ w = "100%", myGroups = [], chatId }) => (
       <Typography textAlign={"center"} padding="1rem">
         No groups
       </Typography>
-    )} */}
+    )}
   </Stack>
 );
 

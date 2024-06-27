@@ -7,6 +7,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  Button
 } from "@mui/material";
 import React, { Suspense, lazy, useState } from "react";
 import { blue } from "../../constants/color";
@@ -18,6 +19,7 @@ import {
   Logout as LogoutIcon,
   Notifications as NotificationsIcon,
 } from "@mui/icons-material";
+import {Avatar} from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../constants/config";
@@ -26,26 +28,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { userNotExists } from "../../redux/reducers/auth";
 import {
   setIsMobile,
+  setIsMobileProfile,
   setIsNewGroup,
   setIsNotification,
+  setIsProfile,
   setIsSearch,
 } from "../../redux/reducers/misc";
 import { resetNotificationCount } from "../../redux/reducers/chat";
-
+import {transformImage} from '../../lib/features'
+import Profile from "../specific/Profile";
 const SearchDialog = lazy(() => import("../specific/Search"));
 const NotifcationDialog = lazy(() => import("../specific/Notifications"));
 const NewGroupDialog = lazy(() => import("../specific/NewGroup"));
 
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isSearch, isNotification, isNewGroup } = useSelector(
+  const { isSearch, isNotification, isNewGroup,isProfile } = useSelector(
     (state) => state.misc
   );
   const { notificationCount } = useSelector((state) => state.chat);
 
   const handleMobile = () => dispatch(setIsMobile(true));
+  const handleMobileProfile=()=> dispatch(setIsMobileProfile(true));
+    
 
   const openSearch = () => dispatch(setIsSearch(true));
 
@@ -59,7 +67,9 @@ const Header = () => {
   };
 
   const navigateToGroup = () => navigate("/groups");
-
+  const showProfile = ()=>{
+     dispatch(setIsProfile(true));
+  }
   const logoutHandler = async () => {
     try {
       const { data } = await axios.get(`${server}/api/v1/user/logout`, {
@@ -96,16 +106,35 @@ const Header = () => {
                 display: { xs: "block", sm: "none" },
               }}
             >
-              <IconButton color="inherit" onClick={handleMobile}>
+              <Button color="inherit" onClick={handleMobile}>
                 <MenuIcon />
-              </IconButton>
+                 <Typography 
+                 variant="h6" 
+                 sx={{ textTransform: 'none', fontSize: 'inherit'}}
+                 >Chats</Typography>
+              </Button>
             </Box>
             <Box
               sx={{
                 flexGrow: 1,
               }}
             />
-            <Box>
+            <Box
+              sx={{
+                display: { xs: "block", sm: "none" },
+              }}
+            >
+              <IconButton color="inherit" onClick={handleMobileProfile}>
+              <Avatar
+                src={transformImage(user?.avatar?.url)}
+              />
+              </IconButton>
+            </Box>
+            <Box
+            sx={{
+              display: { xs: "none", sm: "block" },
+            }}
+            >
               <IconBtn
                 title={"Search"}
                 icon={<SearchIcon />}
@@ -130,11 +159,17 @@ const Header = () => {
                 onClick={openNotification}
                 value={notificationCount}
               />
-
               <IconBtn
                 title={"Logout"}
                 icon={<LogoutIcon />}
                 onClick={logoutHandler}
+              />
+              <IconBtn
+                title={"Profile"}
+                icon={<Avatar
+                  src={transformImage(user?.avatar?.url)}
+                />}
+                onClick={showProfile}
               />
             </Box>
           </Toolbar>
@@ -156,6 +191,11 @@ const Header = () => {
       {isNewGroup && (
         <Suspense fallback={<Backdrop open />}>
           <NewGroupDialog />
+        </Suspense>
+      )}
+      {isProfile && (
+        <Suspense fallback={<Backdrop open />}>
+          <Profile user={user} />
         </Suspense>
       )}
     </>

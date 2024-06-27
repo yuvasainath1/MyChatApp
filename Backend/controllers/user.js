@@ -14,7 +14,6 @@ import {
 import { ErrorHandler } from "../utils/utility.js";
 import { CHAT_TOKEN } from "../constants/config.js";
 
-// Create a new user and save it to the database and save token in cookie
 const newUser = TryCatch(async (req, res, next) => { 
   const { name, username, password, bio, } = req.body;
   const file = req.file;
@@ -37,7 +36,7 @@ const newUser = TryCatch(async (req, res, next) => {
   sendToken(res, user, 201, "User created");
 });
 
-// Login user and save token in cookie
+
 const login = TryCatch(async (req, res, next) => {
   const { username, password } = req.body;
 
@@ -77,17 +76,11 @@ const logout = TryCatch(async (req, res) => {
 const searchUser = TryCatch(async (req, res) => {
   const { name = "" } = req.query;
 
-  // Finding All my chats
   const myChats = await Chat.find({ groupChat: false, members: req.user });
-  //  extracting All Users from my chats means friends or people I have chatted with
   const allUsersFromMyChats = myChats.flatMap((chat) => chat.members);
-  // Finding all users except me and my friends
   const allUsersExceptMeAndFriends = await User.find({
-    // _id: { $nin: allUsersFromMyChats },
+    _id: { $nin: allUsersFromMyChats },
     name: { $regex: name, $options: "i" }});
-  console.log(allUsersExceptMeAndFriends);
-  // Modifying the response
-  // console.log(allUsersExceptMeAndFriends);
   const users = allUsersExceptMeAndFriends.map(({ _id, name, avatar }) => ({
     _id,
     name,

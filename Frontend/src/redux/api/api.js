@@ -164,7 +164,7 @@ const api = createApi({
 
 export default api;
 export const {
-  useMyChatsQuery,
+  useMyChatsQuery, 
   useLazySearchUserQuery,
   useSendFriendRequestMutation,
   useGetNotificationsQuery,
