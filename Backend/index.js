@@ -159,6 +159,7 @@ app.use(errorMiddleware);
 
 server.listen(port, () => {
   console.log(`Server is running on port ${port} in ${envMode} Mode`);
+  console.log(process.env.CLIENT_URL)
 });
 
 export { envMode, adminSecretKey, userSocketIDs };
