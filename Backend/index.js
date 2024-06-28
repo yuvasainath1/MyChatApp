@@ -37,7 +37,7 @@ import adminRoute from "./routes/admin.js";
 
 
 dotenv.config({
-  path: "./.sampleEnv", 
+  path: "./.env", 
 });
 
 const mongoURI = process.env.MONGO_URI;
