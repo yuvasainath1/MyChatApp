@@ -37,12 +37,6 @@ import { sampleMessage } from "../constants/sampleData";
 
 const Chat = ({ chatId, user }) => {
   
-  // user={
-  //   name:"siva",
-  //   _id:"avdssvs",
-  //   username: "sivakrishna1092",
-  // }
-  // console.log(user)
   const socket = getSocket();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -109,27 +103,27 @@ const Chat = ({ chatId, user }) => {
     setMessage("");
   };
 
-  // useEffect(() => {
-  //   socket.emit(CHAT_JOINED, { userId: user._id, members });
-  //   dispatch(removeNewMessagesAlert(chatId));
+  useEffect(() => {
+    socket.emit(CHAT_JOINED, { userId: user._id, members });
+    dispatch(removeNewMessagesAlert(chatId));
 
-  //   return () => {
-  //     setMessages([]);
-  //     setMessage("");
-  //     setOldMessages([]);
-  //     setPage(1);
-  //     socket.emit(CHAT_LEAVED, { userId: user._id, members });
-  //   };
-  // }, [chatId]);
+    return () => {
+      setMessages([]);
+      setMessage("");
+      setOldMessages([]);
+      setPage(1);
+      socket.emit(CHAT_LEAVED, { userId: user._id, members });
+    };
+  }, [chatId]);
 
   useEffect(() => {
     if (bottomRef.current)
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // useEffect(() => {
-  //   if (chatDetails.isError) return navigate("/");
-  // }, [chatDetails.isError]);
+  useEffect(() => {
+    if (chatDetails.isError) return navigate("/");
+  }, [chatDetails.isError]);
 
   const newMessagesListener = useCallback(
     (data) => {
@@ -163,7 +157,7 @@ const Chat = ({ chatId, user }) => {
       const messageForAlert = {
         content: data.message,
         sender: {
-          _id: "djasdhajksdhasdsadasdas",
+          _id: "thankforusingmychatapp",
           name: "Admin",
         },
         chat: chatId,
@@ -207,10 +201,7 @@ const Chat = ({ chatId, user }) => {
         {allMessages.map((i) => (
           <MessageComponent key={i._id} message={i} user={user} />
         ))}
-         {/* {sampleMessage.map((i) => (
-          <MessageComponent key={i._id} message={i} user={{_id:"2"}} />
-        ))} */}
-
+         
         {userTyping && <TypingLoader />}
 
         <div ref={bottomRef} />

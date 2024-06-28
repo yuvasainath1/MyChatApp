@@ -221,46 +221,30 @@ const Groups = () => {
       ) : (
         <>
           <Typography variant="h4">{groupName}</Typography>
+          <Tooltip title="Edit Group" >
           <IconButton
             disabled={isLoadingGroupName}
             onClick={() => setIsEdit(true)}
           >
             <EditIcon />
           </IconButton>
+          </Tooltip>
+          <Tooltip  title="Delete Group"  >
+          <IconButton>
+          <DeleteIcon          
+          onClick={openConfirmDeleteHandler}
+          />
+          </IconButton>
+          </Tooltip>
+          <Tooltip title="Add members">
+          <IconButton>
+            <AddIcon
+            onClick={openAddMemberHandler}
+            />
+          </IconButton>
+          </Tooltip>
         </>
       )}
-    </Stack>
-  );
-
-  const ButtonGroup = (
-    <Stack
-      direction={{
-        xs: "column-reverse",
-        sm: "row",
-      }}
-      spacing={"1rem"}
-      p={{
-        xs: "0",
-        sm: "1rem",
-        md: "1rem 4rem",
-      }}
-    >
-      <Button
-        size="large"
-        color="error"
-        startIcon={<DeleteIcon />}
-        onClick={openConfirmDeleteHandler}
-      >
-        Delete Group
-      </Button>
-      <Button
-        size="large"
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={openAddMemberHandler}
-      >
-        Add Member
-      </Button>
     </Stack>
   );
 
@@ -339,8 +323,6 @@ const Groups = () => {
                 ))
               )}
             </Stack>
-
-            {ButtonGroup}
           </>
         )}
       </Grid>
