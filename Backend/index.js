@@ -77,7 +77,7 @@ app.use("/api/v1/chat", chatRoute);
 app.use("/api/v1/admin", adminRoute);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hell is this world");
 });
 
 io.use((socket, next) => {
