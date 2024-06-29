@@ -44,8 +44,6 @@ const BouncingSkeleton = styled(Skeleton)(() => ({
 }));
 
 export {
-  CurveButton,
-  SearchField,
   InputBox,
   Link,
   VisuallyHiddenInput,
