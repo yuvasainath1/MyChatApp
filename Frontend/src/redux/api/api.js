@@ -4,7 +4,7 @@ import { server } from "../../constants/config";
 const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: `${server}/api/v1/` }),
-  tagTypes: ["Chat", "User", "Message"],
+  tagTypes: ["Chat", "User", "Message","Admin"],
 
   endpoints: (builder) => ({
     myChats: builder.query({
@@ -159,6 +159,39 @@ const api = createApi({
       }),
       invalidatesTags: ["Chat"],
     }),
+
+    adminChatDetails: builder.query({
+      query: () => ({
+        url: "admin/chats",
+        credentials: "include",
+      }),
+      providesTags: ["Admin"],
+    }),
+
+    adminDashboard: builder.query({
+      query: () => ({
+        url: "admin/stats",
+        credentials: "include",
+      }),
+      providesTags: ["Admin"],
+    }),
+
+    adminUserDatails: builder.query({
+      query: () => ({
+        url: "admin/users",
+        credentials: "include",
+      }),
+      providesTags: ["Admin"],
+    }),
+
+    adminMessageDatails: builder.query({
+      query: () => ({
+        url: "admin/messages",
+        credentials: "include",
+      }),
+      providesTags: ["Admin"],
+    }),
+    
   }),
 });
 
@@ -180,4 +213,8 @@ export const {
   useAddGroupMembersMutation,
   useDeleteChatMutation,
   useLeaveGroupMutation,
+  useAdminChatDetailsQuery,
+  useAdminDashboardQuery,
+  useAdminUserDatailsQuery,
+  useAdminMessageDatailsQuery
 } = api;

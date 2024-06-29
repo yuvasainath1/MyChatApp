@@ -1,5 +1,5 @@
 import { useFetchData } from "6pp";
-import { Avatar, Box, Stack } from "@mui/material";
+import { Avatar, Box, Stack, Skeleton  } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
@@ -9,6 +9,7 @@ import { server } from "../../constants/config";
 import { useErrors } from "../../hooks/hook";
 import { fileFormat, transformImage } from "../../lib/features";
 import { dashboardData } from "../../constants/sampleData";
+import { useAdminMessageDatailsQuery } from "../../redux/api/api";
 
 const columns = [
   {
@@ -88,11 +89,7 @@ const columns = [
 ];
 
 const MessageManagement = () => {
-  const { loading, data, error } = useFetchData(
-    `${server}/api/v1/admin/messages`,
-    "dashboard-messages"
-  );
-
+  const {isLoading,data,error}=useAdminMessageDatailsQuery();
   useErrors([
     {
       isError: error,
@@ -120,7 +117,7 @@ const MessageManagement = () => {
 
   return (
     <AdminLayout>
-      {loading ? (
+      {isLoading ? (
         <Skeleton height={"100vh"} />
       ) : (
         <Table

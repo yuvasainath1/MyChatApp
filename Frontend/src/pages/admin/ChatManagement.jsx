@@ -1,4 +1,3 @@
-import { useFetchData } from "6pp";
 import { Avatar, Skeleton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
@@ -8,6 +7,7 @@ import { server } from "../../constants/config";
 import { useErrors } from "../../hooks/hook";
 import { transformImage } from "../../lib/features";
 import { dashboardData } from "../../constants/sampleData";
+import { useAdminChatDetailsQuery } from "../../redux/api/api";
 
 const columns = [
   {
@@ -73,11 +73,8 @@ const columns = [
 ];
 
 const ChatManagement = () => {
-  const { loading, data, error } = useFetchData(
-    `${server}/api/v1/admin/chats`,
-    "dashboard-chats"
-  );
-
+ 
+  const {isLoading,data,error} = useAdminChatDetailsQuery();
   useErrors([
     {
       isError: error,
@@ -106,7 +103,7 @@ const ChatManagement = () => {
 
   return (
     <AdminLayout>
-      {loading ? (
+      {isLoading ? (
         <Skeleton height={"100vh"} />
       ) : (
         <Table heading={"All Chats"} columns={columns} rows={rows} />

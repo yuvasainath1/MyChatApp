@@ -1,4 +1,3 @@
-import { useFetchData } from "6pp";
 import { Avatar, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
@@ -7,6 +6,7 @@ import { server } from "../../constants/config";
 import { useErrors } from "../../hooks/hook";
 import { transformImage } from "../../lib/features";
 import { dashboardData } from "../../constants/sampleData";
+import { useAdminUserDatailsQuery } from "../../redux/api/api";
 
 const columns = [
   {
@@ -51,11 +51,8 @@ const columns = [
   },
 ];
 const UserManagement = () => {
-  const { loading, data, error } = useFetchData(
-    `${server}/api/v1/admin/users`,
-    "dashboard-users"
-  );
 
+  const {isLoading,data,error}=useAdminUserDatailsQuery();
   useErrors([
     {
       isError: error,
@@ -79,7 +76,7 @@ const UserManagement = () => {
 
   return (
     <AdminLayout>
-      {loading ? (
+      {isLoading? (
         <Skeleton height={"100vh"} />
       ) : (
         <Table heading={"All Users"} columns={columns} rows={rows} />

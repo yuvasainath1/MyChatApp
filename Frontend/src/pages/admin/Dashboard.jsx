@@ -1,74 +1,31 @@
-import { useFetchData } from "6pp";
 import {
-  AdminPanelSettings as AdminPanelSettingsIcon,
   Group as GroupIcon,
   Message as MessageIcon,
-  Notifications as NotificationsIcon,
   Person as PersonIcon,
 } from "@mui/icons-material";
 import {
-  Box,
   Container,
   Paper,
   Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
-import moment from "moment";
 import React from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
 import { DoughnutChart, LineChart } from "../../components/specific/Charts";
-import {
-  CurveButton,
-  SearchField,
-} from "../../components/styles/StyledComponents";
 import { matBlack } from "../../constants/color";
-import { server } from "../../constants/config";
 import { useErrors } from "../../hooks/hook";
+import { useAdminDashboardQuery } from "../../redux/api/api";
 
 const Dashboard = () => {
-  const { loading, data, error } = useFetchData(
-    `${server}/api/v1/admin/stats`,
-    "dashboard-stats"
-  );
-
+  const {isLoading,data,error}=useAdminDashboardQuery()
   const { stats } = data || {};
-
   useErrors([
     {
       isError: error,
       error: error,
     },
   ]);
-
-  const Appbar = (
-    <Paper
-      elevation={3}
-      sx={{ padding: "2rem", margin: "2rem 0", borderRadius: "1rem" }}
-    >
-      <Stack direction={"row"} alignItems={"center"} spacing={"1rem"}>
-        <AdminPanelSettingsIcon sx={{ fontSize: "3rem" }} />
-
-        <SearchField placeholder="Search..." />
-
-        <CurveButton>Search</CurveButton>
-        <Box flexGrow={1} />
-        <Typography
-          display={{
-            xs: "none",
-            lg: "block",
-          }}
-          color={"rgba(0,0,0,0.7)"}
-          textAlign={"center"}
-        >
-          {moment().format("dddd, D MMMM YYYY")}
-        </Typography>
-
-        <NotificationsIcon />
-      </Stack>
-    </Paper>
-  );
-
   const Widgets = (
     <Stack
       direction={{
@@ -96,12 +53,10 @@ const Dashboard = () => {
 
   return (
     <AdminLayout>
-      {loading ? (
+      {isLoading ? (
         <Skeleton height={"100vh"} />
       ) : (
-        <Container component={"main"}>
-          {Appbar}
-
+        <Container component={"main"} style={{padding:"2rem"}}  >
           <Stack
             direction={{
               xs: "column",

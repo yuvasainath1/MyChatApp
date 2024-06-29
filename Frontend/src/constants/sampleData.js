@@ -126,7 +126,7 @@ export const dashboardData = {
       totalMembers: 2,
       totalMessages: 20,
       creator: {
-        name: "John Boi",
+        name: "John nhai",
         avatar: "https://www.w3schools.com/howto/img_avatar.png",
       },
     },

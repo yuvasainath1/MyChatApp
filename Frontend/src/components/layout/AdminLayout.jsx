@@ -111,7 +111,7 @@ const AdminLayout = ({ children }) => {
 
   const handleClose = () => setIsMobile(false);
 
-  // if (!isAdmin) return <Navigate to="/admin" />;
+  if (!isAdmin) return <Navigate to="/admin" />;
 
   return (
     <Grid container minHeight={"100vh"}>
