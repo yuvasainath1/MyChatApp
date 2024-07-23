@@ -12,6 +12,6 @@ jobs:
             - name: Login to docker hub
               run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             - name: Build docker image
-              run: docker build -t yuvasainath1/MyChatApp ./Backend
+              run: docker build -t yuvasainath/mychatapp ./Backend
             - name: publish image to docker hub
               run: docker push yuvasainath/mychatapp:latest 
