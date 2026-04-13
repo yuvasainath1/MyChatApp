@@ -48,10 +48,10 @@ const userSocketIDs = new Map();
 const onlineUsers = new Set();
 
 connectDB(mongoURI);
-// createGroupChats(10);
-// createMessages(10);
-// createMessagesInAChat(10);
-// createSingleChats(10);
+createGroupChats(10);
+createMessages(10);
+createMessagesInAChat(10);
+createSingleChats(10);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
